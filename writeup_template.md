@@ -89,6 +89,17 @@ Here is the end result of executing the piple line on 4 test images.
 
 ![alt text][image4]
 
+###A few things to consider to increase the reliability of the Classifer and the Sliding Window:
+
+1. The quality of the features that the classifer is trained on. For example, choosing the color histogram only would result in a sigfinicant decrease in the classification accuracy because classifying based on color is not enough. On the other hand, HOG features describe the shape of the samples and thus helps the classifier to distinguish between different objects. So appending more feature types such as color, HOG and spatial features to a classifier increase the accuracy.
+
+2. Normalizing the data before training a classifier is also crucial, because some types of features have high magnitudes and other have smaller. This issue could lead that the classifier is sensitive to features with wide ranges than others and therefore affects the accuracy of the classifier. For example, color features range between 0 and 255 but features like HOG range between 0-1.
+
+3. Testing the classifer on an unseen dataset to measure the actual accuracy of the classifier.
+
+4. The sliding window scale defines the size of the window to search in a given frame. This parameter affects on detecting closer or distant objects. For example, a scale of `1` means that the search grid contains tiny cells as I already described in the question above.
+5. Applying a rejection threshold on heatmaps to remove False Positives.
+Often times, the Sliding Window technique detects False Positives and to combat this problem is to build a heat map and use rejection threshold. The rejection threshold is a parameter that can be tuned to get the best results. I used a value of `2` and it works well. 
 
 ---
 
